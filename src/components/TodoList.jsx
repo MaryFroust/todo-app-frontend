@@ -11,7 +11,8 @@ const TodoList = () => {
     useEffect(() => {
         async function getAllTodos() {
             try {
-                const response = await axios.get('http://localhost:3000/api/todo/get-all-todos')
+                const response = await axios.get(
+                    `${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/get-all-todos`)
                 setTodoList(response.data.payload)
             } catch (error) {
                 console.log(error)
@@ -43,7 +44,7 @@ const TodoList = () => {
 
     async function handleEditTodo(id, updateObj) {//if changing isDone {isDone: true/false} {text: "walk dog"}
         try {
-            const response = await axios.put(`http://localhost:3000/api/todo/update-todo/${id}`, updateObj)
+            const response = await axios.put(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/update-todo/${id}`, updateObj)
             console.log(response.data.payload)
             const newList = todoList.map(item => {   //loop through array
                 if (item._id === id) {  //if we arrive at an object with the matching id,
@@ -61,7 +62,7 @@ const TodoList = () => {
 
     async function handleDelete(id, deleteObj) {
         try {
-            await axios.delete(`http://localhost:3000/api/todo/delete-todo/${id}`, deleteObj)//communicates with db
+            await axios.delete(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/delete-todo/${id}`, deleteObj)//communicates with db
             const newList = todoList.filter(item => item._id !== id)//telling db to get rid of it
             setTodoList(newList)
         } catch (error) {
@@ -87,7 +88,7 @@ const TodoList = () => {
             if (textInput === '') {
                 return
             }
-            const response = await axios.post('http://localhost:3000/api/todo/create-todo', { text: textInput })
+            const response = await axios.post(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/create-todo, { text: textInput }`)
             //add todo from the textInput
 
             setTodoList([...todoList, response.data.payload])// the new .push(), called 
