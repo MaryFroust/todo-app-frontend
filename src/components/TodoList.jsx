@@ -88,7 +88,7 @@ const TodoList = () => {
             if (textInput === '') {
                 return
             }
-            const response = await axios.post(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/create-todo, { text: textInput }`)
+            const response = await axios.post(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/create-todo`, { text: textInput })
             //add todo from the textInput
 
             setTodoList([...todoList, response.data.payload])// the new .push(), called 
